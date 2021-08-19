@@ -283,7 +283,7 @@ dag_base = DAG(
     dag_id='DATA_BASE',
     description='BASE DAG',
     start_date=datetime(2021, 7, 15, 14, 30),
-    end_date=datetime(9999, 7, 15, 14, 30),
+    end_date=datetime(9998, 7, 15, 14, 30),
     schedule_interval='@daily'
 )
 
