@@ -223,8 +223,7 @@ def spark_code_base():
                           mode='overwrite')
 
     logging.info('Sucsess')
-
-
+#
 ### -- Spark API Executions -- ###
 params_spark2 = [f'{current_date}.json']
 
