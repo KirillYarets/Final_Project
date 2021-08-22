@@ -275,20 +275,20 @@ params_spark2 = [f'{current_date}.json']
 def spark_code_api():
 
     try:
-        df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Silver/api/{current_date}/{current_date}/file.parquet", header=True)
+        params_spark2 = [f'{current_date}.json']
 
-        df_base = df_base.withColumn("product_id", col("product_id").cast("int"))
-        df_base = df_base.withColumn("date", col("date").cast("date"))
+        for tables_api in params_spark2:
+            df_api = spark.read.json(
+                f"webhdfs://192.168.0.111:50070/4_Temp/Bronse/api_data/folder_{current_date}/{tables_api}")
+            df_api = df_api.dropDuplicates()
+            df_api.write.parquet(f"/4_Temp/Silver/api/{current_date}/{tables_api.rsplit('.', 1)[0]}/file.parquet",
+                                 mode='overwrite')
 
-
-        df_base.write.jdbc(gp_url
-                           , table=f"dim_oos"
-                           , properties=gp_proporties
-                           , mode='overwrite')
     except requests.RequestException as e:
         print('Error!')
         print(e)
+
+
 
 
 
@@ -441,6 +441,20 @@ def cr_tables():
         print('Error!')
         print(e)
 
+    try:
+        df_base = spark.read.parquet(
+            f"webhdfs://192.168.0.111:50070/4_Temp/Silver/api/{current_date}/{current_date}/file.parquet", header=True)
+
+        df_base = df_base.withColumn("product_id", col("product_id").cast("int"))
+        df_base = df_base.withColumn("date", col("date").cast("date"))
+
+        df_base.write.jdbc(gp_url
+                           , table=f"dim_oos"
+                           , properties=gp_proporties
+                           , mode='overwrite')
+    except requests.RequestException as e:
+        print('Error!')
+        print(e)
 
     try:
 
