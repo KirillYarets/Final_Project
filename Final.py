@@ -18,7 +18,7 @@ from sqlalchemy import sql
 
 pg_creds2 = \
     {
-        'host': '192.168.0.111',
+        'host': '192.168.43.150',
         'port': '5432',
         'database': 'dshop_bu',
         'user': 'pguser',
@@ -27,12 +27,12 @@ pg_creds2 = \
 
 
 
-gp_url = 'jdbc:postgresql://192.168.0.111:5433/postgres'
+gp_url = 'jdbc:postgresql://192.168.43.150:5433/postgres'
 gp_proporties = {"user": "gpuser", "password": "secret"}
 
 current_date = datetime.now().date()
 
-client = InsecureClient(f'http://192.168.0.111:50070/', user='user')
+client = InsecureClient(f'http://192.168.43.150:50070/', user='user')
 
 url_in = 'http://robot-dreams-de-api.herokuapp.com/auth'
 url_out = 'http://robot-dreams-de-api.herokuapp.com/out_of_stock'
@@ -133,7 +133,7 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[0]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[0]}.csv"
+            f"webhdfs://192.168.43.150:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[0]}.csv"
             ,header = True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('fullname').isNotNull())
@@ -152,7 +152,7 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[1]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[1]}.csv"
+            f"webhdfs://192.168.43.150:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[1]}.csv"
             , header=True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('type').isNotNull())
@@ -170,7 +170,7 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[2]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[2]}.csv"
+            f"webhdfs://192.168.43.150:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[2]}.csv"
             ,header = True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('product_name').isNotNull())
@@ -187,7 +187,7 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[3]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[3]}.csv"
+            f"webhdfs://192.168.43.150:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[3]}.csv"
             ,header = True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('aisle').isNotNull())
@@ -205,7 +205,7 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[4]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[4]}.csv"
+            f"webhdfs://192.168.43.150:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[4]}.csv"
             ,header = True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('department').isNotNull())
@@ -223,7 +223,7 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[5]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[5]}.csv"
+            f"webhdfs://192.168.43.150:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[5]}.csv"
             ,header = True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('area').isNotNull())
@@ -240,7 +240,7 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[6]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[6]}.csv"
+            f"webhdfs://192.168.43.150:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[6]}.csv"
             ,header = True)
         df_base = df_base.dropDuplicates()
         df_base.write.parquet(f"/4_Temp/Silver/d_shop/{current_date}/{tables_spark[6].rsplit('.', 1)[0]}/file.parquet",
@@ -255,7 +255,7 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[7]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[7]}.csv"
+            f"webhdfs://192.168.43.150:50070/4_Temp/Bronse/db_data/folder_{current_date}/{tables_spark[7]}.csv"
             , header=True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('product_id').isNotNull())
@@ -279,7 +279,7 @@ def spark_code_api():
 
         for tables_api in params_spark2:
             df_api = spark.read.json(
-                f"webhdfs://192.168.0.111:50070/4_Temp/Bronse/api_data/folder_{current_date}/{tables_api}")
+                f"webhdfs://192.168.43.150:50070/4_Temp/Bronse/api_data/folder_{current_date}/{tables_api}")
             df_api = df_api.dropDuplicates()
             df_api.write.parquet(f"/4_Temp/Silver/api/{current_date}/{tables_api.rsplit('.', 1)[0]}/file.parquet",
                                  mode='overwrite')
@@ -297,7 +297,7 @@ def spark_code_api():
 def cr_tables():
     try:
             df_base = spark.read.parquet(
-                f"webhdfs://192.168.0.111:50070/4_Temp/Silver/d_shop/{current_date}/aisles/file.parquet", header=True)
+                f"webhdfs://192.168.43.150:50070/4_Temp/Silver/d_shop/{current_date}/aisles/file.parquet", header=True)
 
             df_base = df_base.withColumn("aisle_id", col("aisle_id").cast("int"))
             df_base = df_base.withColumn("aisle", col("aisle").cast("string"))
@@ -313,7 +313,7 @@ def cr_tables():
 
     try:
             df_base = spark.read.parquet(
-                f"webhdfs://192.168.0.111:50070/4_Temp/Silver/d_shop/{current_date}/clients/file.parquet", header=True)
+                f"webhdfs://192.168.43.150:50070/4_Temp/Silver/d_shop/{current_date}/clients/file.parquet", header=True)
 
             df_base = df_base.withColumn("id", col("id").cast("int"))
             df_base = df_base.withColumn("fullname", col("fullname").cast("string"))
@@ -329,7 +329,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Silver/d_shop/{current_date}/departments/file.parquet", header=True)
+            f"webhdfs://192.168.43.150:50070/4_Temp/Silver/d_shop/{current_date}/departments/file.parquet", header=True)
 
         df_base = df_base.withColumn("department_id", col("department_id").cast("int"))
         df_base = df_base.withColumn("department", col("department").cast("string"))
@@ -347,7 +347,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Silver/d_shop/{current_date}/location_areas/file.parquet", header=True)
+            f"webhdfs://192.168.43.150:50070/4_Temp/Silver/d_shop/{current_date}/location_areas/file.parquet", header=True)
 
         df_base = df_base.withColumn("area_id", col("area_id").cast("int"))
         df_base = df_base.withColumn("area", col("area").cast("string"))
@@ -364,7 +364,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Silver/d_shop/{current_date}/orders/file.parquet",
+            f"webhdfs://192.168.43.150:50070/4_Temp/Silver/d_shop/{current_date}/orders/file.parquet",
             header=True)
 
         df_base = df_base.withColumn("order_id", col("order_id").cast("int"))
@@ -375,7 +375,7 @@ def cr_tables():
         df_base = df_base.withColumn("order_date", col("order_date").cast("date"))
 
         df_base.write.jdbc(gp_url
-                           , table=f"dim_orders"
+                           , table=f"fct_orders"
                            , properties=gp_proporties
                            , mode='overwrite')
     except requests.RequestException as e:
@@ -387,7 +387,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Silver/d_shop/{current_date}/products/file.parquet",
+            f"webhdfs://192.168.43.150:50070/4_Temp/Silver/d_shop/{current_date}/products/file.parquet",
             header=True)
 
         df_base = df_base.withColumn("product_id", col("product_id").cast("int"))
@@ -408,7 +408,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Silver/d_shop/{current_date}/store_types/file.parquet",
+            f"webhdfs://192.168.43.150:50070/4_Temp/Silver/d_shop/{current_date}/store_types/file.parquet",
             header=True)
 
         df_base = df_base.withColumn("store_type_id", col("store_type_id").cast("int"))
@@ -426,7 +426,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Silver/d_shop/{current_date}/stores/file.parquet",
+            f"webhdfs://192.168.43.150:50070/4_Temp/Silver/d_shop/{current_date}/stores/file.parquet",
             header=True)
 
         df_base = df_base.withColumn("store_id", col("store_id").cast("int"))
@@ -443,23 +443,24 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/4_Temp/Silver/api/{current_date}/{current_date}/file.parquet", header=True)
+            f"webhdfs://192.168.43.150:50070/4_Temp/Silver/api/{current_date}/{current_date}/file.parquet", header=True)
 
         df_base = df_base.withColumn("product_id", col("product_id").cast("int"))
         df_base = df_base.withColumn("date", col("date").cast("date"))
 
         df_base.write.jdbc(gp_url
-                           , table=f"dim_oos"
+                           , table=f"fct_oos"
                            , properties=gp_proporties
                            , mode='overwrite')
     except requests.RequestException as e:
         print('Error!')
         print(e)
 
+def cr_keys():
     try:
 
         pg_gren = psycopg2.connect(
-            host='192.168.0.111',
+            host='192.168.43.150',
             port='5433',
             database='postgres',
             user='gpuser',
@@ -471,15 +472,15 @@ def cr_tables():
                  ALTER TABLE dim_clients ADD CONSTRAINT clients_pkey PRIMARY KEY(id); \
                  ALTER TABLE dim_departments ADD CONSTRAINT departments_pk PRIMARY KEY(department_id); \
                  ALTER TABLE dim_location_areas ADD CONSTRAINT location_areas_pkey PRIMARY KEY(area_id); \
-                 ALTER TABLE dim_products ADD CONSTRAINT products_pk PRIMARY KEY(product_id); \
                  ALTER TABLE dim_store_types ADD CONSTRAINT store_types_pkey PRIMARY KEY(store_type_id); \
-                 ALTER TABLE dim_stores ADD CONSTRAINT stores_types_store_id_fk FOREIGN KEY (store_type_id) REFERENCES dim_store_types(store_type_id); \
-                 ALTER TABLE dim_orders ADD CONSTRAINT orders_clients_id_fk FOREIGN KEY(client_id) REFERENCES dim_clients(id); \
-                 ALTER TABLE dim_orders ADD CONSTRAINT orders_products_id_fk FOREIGN KEY(product_id) REFERENCES dim_products(product_id); \
+                 ALTER TABLE fct_orders ADD CONSTRAINT orders_clients_id_fk FOREIGN KEY(client_id) REFERENCES dim_clients(id); \
+                 ALTER TABLE fct_orders ADD CONSTRAINT orders_products_id_fk FOREIGN KEY(product_id) REFERENCES dim_products(product_id); \
                  ALTER TABLE dim_products ADD CONSTRAINT products_department_id_fk FOREIGN KEY(department_id) REFERENCES dim_departments(department_id); \
                  ALTER TABLE dim_products ADD FOREIGN KEY (aisle_id) REFERENCES dim_aisles(aisle_id); \
-                 ALTER TABLE dim_stores ADD CONSTRAINT stores_location_areas_id_fk FOREIGN KEY(location_area_id) EFERENCES dim_location_areas(area_id); \
-                 ALTER TABLE dim_stores ADD CONSTRAINT stores_types_store_id_fk FOREIGN KEY(store_type_id) REFERENCES dim_store_types(store_type_id)"
+                 ALTER TABLE fct_orders ADD CONSTRAINT stores_id_fk FOREIGN KEY(store_id) REFERENCES dim_stores(store_id);\
+                 ALTER TABLE dim_stores ADD CONSTRAINT stores_location_areas_id_fk FOREIGN KEY(location_area_id) REFERENCES dim_location_areas(area_id); \
+                 ALTER TABLE dim_stores ADD CONSTRAINT stores_types_store_id_fk FOREIGN KEY(store_type_id) REFERENCES dim_store_types(store_type_id); \
+                 commit;"
 
         cursor.execute(query)
         pg_gren.commit()
@@ -532,6 +533,17 @@ dag_grinplan_base = DAG(
     schedule_interval='@daily'
 )
 
+
+dag_keys = DAG(
+    dag_id='Keys',
+    description='SPARK BASE DAG',
+    start_date=datetime(2021, 7, 15, 14, 30),
+    end_date=datetime(9999, 7, 15, 14, 30),
+    schedule_interval='@daily'
+)
+
+
+
 ################## -- Tasks -- ##############################
 
 task_api = PythonOperator(
@@ -562,4 +574,10 @@ tag_grinplan_base = PythonOperator(
     task_id='dag_grinplan_base',
     dag=dag_grinplan_base,
     python_callable=cr_tables
+)
+
+tag_keys = PythonOperator(
+    task_id='dag_keys',
+    dag=dag_keys,
+    python_callable=cr_keys
 )
