@@ -379,7 +379,7 @@ def spark_code_api():
             df_api = spark.read.json(
                 f"webhdfs://192.168.0.111:50070/DATA_LAKE/Bronse/api_data/folder_{current_date}/{tables_api}")
             df_api = df_api.dropDuplicates()
-            df_api.write.parquet(f"/DATA_LAKE/Silver/api/{current_date}/{tables_api.rsplit('.', 1)[0]}/file.parquet",
+            df_api.write.parquet(f"/DATA_LAKE/Silver/api/{tables_api.rsplit('.', 1)[0]}/file.parquet",
                                  mode='overwrite')
 
             logging.basicConfig(level=logging.DEBUG)
@@ -653,7 +653,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Silver/api/{current_date}/{current_date}/file.parquet", header=True)
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Silver/api/{current_date}/file.parquet", header=True)
 
         df_base = df_base.withColumn("product_id", col("product_id").cast("int"))
         df_base = df_base.withColumn("date", col("date").cast("date"))
