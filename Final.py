@@ -55,8 +55,8 @@ with psycopg2.connect(**pg_creds2) as pg_connection:
 
 ############################## -- Paths -- ##################################################
 
-directory_bronze_api = os.path.join('/', f'MY_LAKE/Bronse/api_data/folder_{current_date}')
-directory_bronze_base = f'MY_LAKE/Bronse/db_data/folder_{current_date}'
+directory_bronze_api = os.path.join('/', f'DATA_LAKE/Bronse/api_data/folder_{current_date}')
+directory_bronze_base = f'DATA_LAKE/Bronse/db_data/folder_{current_date}'
 
 current_date = datetime.now().date()
 
@@ -144,12 +144,12 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[0]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[0]}.csv"
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[0]}.csv"
             ,header = True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('fullname').isNotNull())
         df_base = df_base.withColumn('fullname', trim('fullname'))
-        df_base.write.parquet(f"/MY_LAKE/Silver/d_shop/{current_date}/{tables_spark[0].rsplit('.', 1)[0]}/file.parquet",
+        df_base.write.parquet(f"/DATA_LAKE/Silver/d_shop/{current_date}/{tables_spark[0].rsplit('.', 1)[0]}/file.parquet",
                               mode='overwrite')
 
         logging.basicConfig(level=logging.DEBUG)
@@ -175,12 +175,12 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[1]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[1]}.csv"
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[1]}.csv"
             , header=True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('type').isNotNull())
         df_base = df_base.withColumn('type', trim('type'))
-        df_base.write.parquet(f"/MY_LAKE/Silver/d_shop/{current_date}/{tables_spark[1].rsplit('.', 1)[0]}/file.parquet",
+        df_base.write.parquet(f"/DATA_LAKE/Silver/d_shop/{current_date}/{tables_spark[1].rsplit('.', 1)[0]}/file.parquet",
                               mode='overwrite')
 
         logging.basicConfig(level=logging.DEBUG)
@@ -203,12 +203,12 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[2]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[2]}.csv"
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[2]}.csv"
             ,header = True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('product_name').isNotNull())
         df_base = df_base.withColumn('product_name', trim('product_name'))
-        df_base.write.parquet(f"/MY_LAKE/Silver/d_shop/{current_date}/{tables_spark[2].rsplit('.', 1)[0]}/file.parquet",
+        df_base.write.parquet(f"/DATA_LAKE/Silver/d_shop/{current_date}/{tables_spark[2].rsplit('.', 1)[0]}/file.parquet",
                               mode='overwrite')
 
         logging.basicConfig(level=logging.DEBUG)
@@ -231,12 +231,12 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[3]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[3]}.csv"
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[3]}.csv"
             ,header = True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('aisle').isNotNull())
         df_base = df_base.withColumn('aisle', trim('aisle'))
-        df_base.write.parquet(f"/MY_LAKE/Silver/d_shop/{current_date}/{tables_spark[3].rsplit('.', 1)[0]}/file.parquet",
+        df_base.write.parquet(f"/DATA_LAKE/Silver/d_shop/{current_date}/{tables_spark[3].rsplit('.', 1)[0]}/file.parquet",
                               mode='overwrite')
 
         logging.basicConfig(level=logging.DEBUG)
@@ -260,12 +260,12 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[4]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[4]}.csv"
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[4]}.csv"
             ,header = True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('department').isNotNull())
         df_base = df_base.withColumn('department', trim('department'))
-        df_base.write.parquet(f"/MY_LAKE/Silver/d_shop/{current_date}/{tables_spark[4].rsplit('.', 1)[0]}/file.parquet",
+        df_base.write.parquet(f"/DATA_LAKE/Silver/d_shop/{current_date}/{tables_spark[4].rsplit('.', 1)[0]}/file.parquet",
                               mode='overwrite')
 
         logging.basicConfig(level=logging.DEBUG)
@@ -289,12 +289,12 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[5]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[5]}.csv"
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[5]}.csv"
             ,header = True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('area').isNotNull())
         df_base = df_base.withColumn('area', trim('area'))
-        df_base.write.parquet(f"/MY_LAKE/Silver/d_shop/{current_date}/{tables_spark[5].rsplit('.', 1)[0]}/file.parquet",
+        df_base.write.parquet(f"/DATA_LAKE/Silver/d_shop/{current_date}/{tables_spark[5].rsplit('.', 1)[0]}/file.parquet",
                               mode='overwrite')
 
         logging.basicConfig(level=logging.DEBUG)
@@ -317,10 +317,10 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[6]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[6]}.csv"
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[6]}.csv"
             ,header = True)
         df_base = df_base.dropDuplicates()
-        df_base.write.parquet(f"/MY_LAKE/Silver/d_shop/{current_date}/{tables_spark[6].rsplit('.', 1)[0]}/file.parquet",
+        df_base.write.parquet(f"/DATA_LAKE/Silver/d_shop/{current_date}/{tables_spark[6].rsplit('.', 1)[0]}/file.parquet",
                               mode='overwrite')
 
         logging.basicConfig(level=logging.DEBUG)
@@ -343,11 +343,11 @@ def spark_code_base():
         logging.info(f"Writing table_{tables_spark[7]} from {pg_creds2} to Silver")
 
         df_base = spark.read.csv(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[7]}.csv"
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Bronse/db_data/folder_{current_date}/{tables_spark[7]}.csv"
             , header=True)
         df_base = df_base.dropDuplicates()
         df_base = df_base.where(F.col('product_id').isNotNull())
-        df_base.write.parquet(f"/MY_LAKE/Silver/d_shop/{current_date}/{tables_spark[7].rsplit('.', 1)[0]}/file.parquet",
+        df_base.write.parquet(f"/DATA_LAKE/Silver/d_shop/{current_date}/{tables_spark[7].rsplit('.', 1)[0]}/file.parquet",
                               mode='overwrite')
 
         logging.basicConfig(level=logging.DEBUG)
@@ -377,9 +377,9 @@ def spark_code_api():
 
         for tables_api in params_spark2:
             df_api = spark.read.json(
-                f"webhdfs://192.168.0.111:50070/MY_LAKE/Bronse/api_data/folder_{current_date}/{tables_api}")
+                f"webhdfs://192.168.0.111:50070/DATA_LAKE/Bronse/api_data/folder_{current_date}/{tables_api}")
             df_api = df_api.dropDuplicates()
-            df_api.write.parquet(f"/MY_LAKE/Silver/api/{current_date}/{tables_api.rsplit('.', 1)[0]}/file.parquet",
+            df_api.write.parquet(f"/DATA_LAKE/Silver/api/{current_date}/{tables_api.rsplit('.', 1)[0]}/file.parquet",
                                  mode='overwrite')
 
             logging.basicConfig(level=logging.DEBUG)
@@ -406,7 +406,7 @@ def spark_code_api():
 def cr_tables():
     try:
             df_base = spark.read.parquet(
-                f"webhdfs://192.168.0.111:50070/MY_LAKE/Silver/d_shop/{current_date}/aisles/file.parquet", header=True)
+                f"webhdfs://192.168.0.111:50070/DATA_LAKE/Silver/d_shop/{current_date}/aisles/file.parquet", header=True)
 
             df_base = df_base.withColumn("aisle_id", col("aisle_id").cast("int"))
             df_base = df_base.withColumn("aisle", col("aisle").cast("string"))
@@ -435,7 +435,7 @@ def cr_tables():
 
     try:
             df_base = spark.read.parquet(
-                f"webhdfs://192.168.0.111:50070/MY_LAKE/Silver/d_shop/{current_date}/clients/file.parquet", header=True)
+                f"webhdfs://192.168.0.111:50070/DATA_LAKE/Silver/d_shop/{current_date}/clients/file.parquet", header=True)
 
             df_base = df_base.withColumn("id", col("id").cast("int"))
             df_base = df_base.withColumn("fullname", col("fullname").cast("string"))
@@ -465,7 +465,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Silver/d_shop/{current_date}/departments/file.parquet", header=True)
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Silver/d_shop/{current_date}/departments/file.parquet", header=True)
 
         df_base = df_base.withColumn("department_id", col("department_id").cast("int"))
         df_base = df_base.withColumn("department", col("department").cast("string"))
@@ -495,7 +495,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Silver/d_shop/{current_date}/location_areas/file.parquet", header=True)
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Silver/d_shop/{current_date}/location_areas/file.parquet", header=True)
 
         df_base = df_base.withColumn("area_id", col("area_id").cast("int"))
         df_base = df_base.withColumn("area", col("area").cast("string"))
@@ -524,7 +524,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Silver/d_shop/{current_date}/orders/file.parquet",
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Silver/d_shop/{current_date}/orders/file.parquet",
             header=True)
 
         df_base = df_base.withColumn("order_id", col("order_id").cast("int"))
@@ -559,7 +559,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Silver/d_shop/{current_date}/products/file.parquet",
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Silver/d_shop/{current_date}/products/file.parquet",
             header=True)
 
         df_base = df_base.withColumn("product_id", col("product_id").cast("int"))
@@ -592,7 +592,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Silver/d_shop/{current_date}/store_types/file.parquet",
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Silver/d_shop/{current_date}/store_types/file.parquet",
             header=True)
 
         df_base = df_base.withColumn("store_type_id", col("store_type_id").cast("int"))
@@ -622,7 +622,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Silver/d_shop/{current_date}/stores/file.parquet",
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Silver/d_shop/{current_date}/stores/file.parquet",
             header=True)
 
         df_base = df_base.withColumn("store_id", col("store_id").cast("int"))
@@ -653,7 +653,7 @@ def cr_tables():
 
     try:
         df_base = spark.read.parquet(
-            f"webhdfs://192.168.0.111:50070/MY_LAKE/Silver/api/{current_date}/{current_date}/file.parquet", header=True)
+            f"webhdfs://192.168.0.111:50070/DATA_LAKE/Silver/api/{current_date}/{current_date}/file.parquet", header=True)
 
         df_base = df_base.withColumn("product_id", col("product_id").cast("int"))
         df_base = df_base.withColumn("date", col("date").cast("date"))
