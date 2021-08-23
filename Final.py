@@ -470,6 +470,7 @@ def cr_keys():
         query = "ALTER TABLE dim_aisles ADD CONSTRAINT dim_aisles_pk PRIMARY KEY (aisle_id) ; \
                  ALTER TABLE dim_products ADD CONSTRAINT products_pk PRIMARY KEY (product_id) ; \
                  ALTER TABLE dim_clients ADD CONSTRAINT clients_pkey PRIMARY KEY(id); \
+                 ALTER TABLE dim_stores ADD CONSTRAINT stores_pkey PRIMARY KEY(store_id); \
                  ALTER TABLE dim_departments ADD CONSTRAINT departments_pk PRIMARY KEY(department_id); \
                  ALTER TABLE dim_location_areas ADD CONSTRAINT location_areas_pkey PRIMARY KEY(area_id); \
                  ALTER TABLE dim_store_types ADD CONSTRAINT store_types_pkey PRIMARY KEY(store_type_id); \
@@ -480,6 +481,7 @@ def cr_keys():
                  ALTER TABLE fct_orders ADD CONSTRAINT stores_id_fk FOREIGN KEY(store_id) REFERENCES dim_stores(store_id);\
                  ALTER TABLE dim_stores ADD CONSTRAINT stores_location_areas_id_fk FOREIGN KEY(location_area_id) REFERENCES dim_location_areas(area_id); \
                  ALTER TABLE dim_stores ADD CONSTRAINT stores_types_store_id_fk FOREIGN KEY(store_type_id) REFERENCES dim_store_types(store_type_id); \
+                 ALTER TABLE fct_oos ADD CONSTRAINT oos_product_id_fk FOREIGN KEY(product_id) REFERENCES dim_products(product_id); \
                  commit;"
 
         cursor.execute(query)
